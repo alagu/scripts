@@ -4,6 +4,11 @@
 # python ipl.py <cricinfourl>
 # Cricinfo URL has to be the iframe url for scoreboard.
 # If cricinfo change their html, this will break :) 
+#
+# Run it in a shell loop for updating regularly
+#
+# Example:
+# while [ 1 ]; do python  ipl.py "http://www.cricinfo.com/ipl2010/engine/current/match/419164.html?view=live;wrappertype=live"; sleep 15; done
 # 
 # Alagu (@alagu on twitter)
 
@@ -15,11 +20,6 @@ import sys
 
 from BeautifulSoup import BeautifulSoup
 url = sys.argv[1]
-
-def remove_html_tags(data):
-    p = re.compile(r'<.*?>')
-    return p.sub('', data)
-
 
 response = urllib2.urlopen(url)
 html = response.read()

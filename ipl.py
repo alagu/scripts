@@ -1,14 +1,15 @@
 # Cricket scores in your (Pidgin) IM Status
 # Works with Pidgin (Ubuntu)
 # Needs Pidgin compiled with DBus, see "About" in Pidgin to see if "Dbus" is enabled
-# python ipl.py <cricinfourl>
+# python ipl.py <cricinfourl> <team>
 # Cricinfo URL has to be the iframe url for scoreboard.
+# <team> is 1 or 2
 # If cricinfo change their html, this will break :) 
 #
 # Run it in a shell loop for updating regularly
 #
 # Example:
-# while [ 1 ]; do python  ipl.py "http://www.cricinfo.com/ipl2010/engine/current/match/419164.html?view=live;wrappertype=live"; sleep 15; done
+# while [ 1 ]; do python  ipl.py "http://www.cricinfo.com/ipl2010/engine/current/match/419164.html?view=live;wrappertype=live" 1; sleep 15; done
 # 
 # Alagu (@alagu on twitter)
 
@@ -25,7 +26,8 @@ response = urllib2.urlopen(url)
 html = response.read()
 soup = BeautifulSoup(html)
 elems = soup.findAll("p" , {"class" : "teamText"})
-message =  elems[1].contents[0].replace("Chennai Super Kings","CSK").replace("Deccan Chargers","DC").replace("Bangalore","RCB")
+team = int(sys.argv[2])-1
+message =  elems[team].contents[0].replace("Chennai Super Kings","CSK").replace("Deccan Chargers","DC").replace("Bangalore","RCB").replace("Mumbai Indians","MI")
 print message
 
 bus = dbus.SessionBus()
